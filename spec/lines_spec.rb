@@ -29,6 +29,16 @@ describe(Line) do
     end
   end
 
+  describe("#save") do
+    it("only saves if the line to be saved isn't already in the list") do
+      test_1 = Line.new({:name => "Red Line"})
+      test_1.save()
+      test_2 = Line.new({:name => "Red Line"})
+      test_2.save()
+      expect(Line.all()).to(eq([test_1]))
+    end
+  end
+
   describe("#==") do
     it("treats two line with the same id and name as equal to each other") do
       test_1 = Line.new({:name => "Red Line"})
@@ -45,6 +55,26 @@ describe(Line) do
       test_2.save()
       Line.clear()
       expect(Line.all()).to(eq([]))
+    end
+  end
+
+  describe(".find") do
+    it("finds a line based on a line_id") do
+      test_1 = Line.new({:name => "Red Line"})
+      test_1.save()
+      test_2 = Line.new({:name => "Blue Line"})
+      test_2.save()
+      expect(Line.find(test_1.id())).to(eq(test_1))
+    end
+  end
+
+  describe("#join") do
+    it("copies the unique line id and unique station id in the join table") do
+      test_line = Line.new({:name => "Red Line"})
+      test_line.save()
+      test_station = Station.new({:name => "Epicodus"})
+      test_station.save()
+      expect(test_line.join(test_station)).to(eq(true))
     end
   end
 end
