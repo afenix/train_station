@@ -56,4 +56,23 @@ class Line
     join_id = number.first().fetch("id").to_i()
     join_id.instance_of?(Fixnum)
   end
+
+  define_method(:list_station_names) do
+    station_ids = []
+    station_names = []
+    returned_stations = DB.exec("SELECT * FROM join_table WHERE line_id = #{self.id()};")
+    returned_stations.each() do |station|
+      id = station.fetch("station_id").to_i()
+      station_ids.push(id)
+    end
+
+    station_ids.each() do |id|
+      station = DB.exec("SELECT * FROM stations WHERE id = #{id}")
+      name = station.first().fetch("name")
+      station_names.push(name)
+    end
+    station_names
+  end
+
+
 end

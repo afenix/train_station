@@ -77,4 +77,22 @@ describe(Line) do
       expect(test_line.join(test_station)).to(eq(true))
     end
   end
+
+  describe("#list_station_names") do
+    it("will return all the stations associated with a particular line") do
+      test_line = Line.new({:name => "Red Line"})
+      test_line.save()
+      test_station = Station.new({:name => "Epicodus"})
+      test_station.save()
+      test_line.join(test_station)
+      test_station2 = Station.new({:name => "Times Square"})
+      test_station2.save()
+      test_line.join(test_station2)
+      test_station3 = Station.new({:name => "Guam"})
+      test_station3.save()
+      test_line.join(test_station3)
+      expect(test_line.list_stations()).to(eq(["Epicodus", "Times Square", "Guam"]))
+    end
+  end
+
 end

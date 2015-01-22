@@ -1,0 +1,42 @@
+<h1>Welcome all important operator</h1>
+
+<h1>What line and corresponding station would you like to add?</h1>
+<form action="/add" method = "post">
+  <div class="form-group">
+    <label for="line">Enter line (new or existing)</label>
+    <input id="line" name="line" class="form-control" type="text">
+  </div>
+  <div class="form-group">
+    <label for="station">Enter station (new or existing)</label>
+    <input id="station" name="station" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn">Add</button>
+</form>
+
+<div class = "col-md-4">
+  <h3>So here's your list of lines</h3>
+  <% if @lines.any?() %>
+  <p>Click on a line to see it's associated stations</p>
+  <ul>
+    <% @lines.each() do |line| %>
+    <li><a href = "/line/<%= line.id() %>"><%= line.name() %></a></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p>There are no lines yet.</p>
+  <% end %>
+</div>
+
+<div class = "col-md-4">
+  <h3>So here's your list of stations</h3>
+  <% if @stations.any?() %>
+  <p>Click on a station to see it's associated lines</p>
+  <ul>
+    <% @stations.each() do |station| %>
+    <li><a href = "/station/<%= station.name() %>"><%= station.name() %></a></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p>There are no stations yet.</p>
+  <% end %>
+</div>
